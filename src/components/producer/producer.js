@@ -10,7 +10,7 @@ import Map from './map';
 
 import producerState from '../../utils/producerState';
 
-if (!localStorage.producerName) localStorage.setItem('producerName', '');
+if (localStorage.producerName) localStorage.setItem('producerName', 'Белоусов Олег Павлович');
 
 const currentProducer = producerState.producers.find(
   producer => producer.person === localStorage.getItem('producerName'),

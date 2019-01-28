@@ -3,7 +3,7 @@ import { Navbar, Form } from 'react-bootstrap';
 
 import Logo from './logo';
 import Navigation from './navigation';
-import Toggle from './toggle';
+// import Toggle from './toggle';
 import Search from './search';
 
 const Menu = () => (
@@ -11,7 +11,7 @@ const Menu = () => (
     <Form inline>
       <Logo />
       <Navigation />
-      <Toggle />
+      {/* <Toggle /> */}
       <Search />
     </Form>
   </Navbar>

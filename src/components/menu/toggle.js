@@ -12,7 +12,7 @@ import producersEng from '../../../data/producers-eng.json'
 export default class Toggle extends Component {
   changeLang(e, lang) {
     // e.preventDefault();
-    // console.log(lang);
+    console.log(lang);
 
     i18n.changeLanguage(lang);
 
@@ -29,10 +29,10 @@ export default class Toggle extends Component {
     return (
       <ButtonToolbar>
         <ToggleButtonGroup type="radio" name="options" defaultValue={1}>
-          <ToggleButton value={1} onClick={(e) => this.changeLang(e, 'ru')}>
+          <ToggleButton value={1} onClick={() => this.props.onClick('ru')}>
             <Trans>Rus</Trans>
           </ToggleButton>
-          <ToggleButton value={2} onClick={(e) => this.changeLang(e, 'en')}>
+          <ToggleButton value={2} onClick={() => this.props.onClick('en')}>
             <Trans>Eng</Trans>
           </ToggleButton>
         </ToggleButtonGroup>
