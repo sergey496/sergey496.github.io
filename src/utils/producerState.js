@@ -43,9 +43,10 @@ const pictures = [
 ];
 
 // const producerOfTheDay = Math.floor(Math.random() * producers.length);
+// let producerOfTheDay = Math.floor(Math.random() * (dateNow.getDay() - 2));
 
 const dateNow = new Date();
-let producerOfTheDay = Math.floor(Math.random() * (dateNow.getDay() - 2));
+let producerOfTheDay = dateNow.getDay() - 2;
 if (producerOfTheDay < 0) producerOfTheDay = 0;
 
 export default {

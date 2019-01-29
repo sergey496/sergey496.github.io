@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+/* eslint-disable prefer-destructuring */
+/* eslint-disable react/destructuring-assignment */
+import React, { Component, Fragment } from 'react';
 import { CardGroup } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
 
@@ -42,7 +44,7 @@ export default class PersonListHandler extends Component {
 
   handleClick = (e) => {
     if (e.target.tagName === 'BUTTON') {
-      localStorage.setItem('producerName', `${e.currentTarget.className}`);
+      window.localStorage.setItem('producerName', `${e.currentTarget.className}`);
     }
   }
 
@@ -55,33 +57,35 @@ export default class PersonListHandler extends Component {
   render() {
     const { resultSearch } = this.state;
 
-    const producers = PersonListHandler.getFiltered(producerState.producers, resultSearch);
+    const producersFiltred = PersonListHandler.getFiltered(producerState.producers, resultSearch);
     const persons = [];
 
     producerState.producers.map(producer => persons.push(producer.person));
 
     return (
-      <CardGroup>
-        <Search onChange={this.inputTextHandler} />
-        {producers.map(person => (
-          // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-          <div
-            role="button"
-            tabIndex={0}
-            className={person.person}
-            key={`${person.person}`}
-            onClick={this.handleClick}
-          >
-            <Person
-              person={person.person}
-              linkImage={producerState.pictures[persons.indexOf(person.person)][0]}
-              linkButton="/person"
-              buttonName={<Trans>More</Trans>}
-              size="15"
-            />
-          </div>
-        ))}
-      </CardGroup>
+      <Fragment>
+        <CardGroup>
+          <Search onChange={this.inputTextHandler} />
+          {producersFiltred.map(person => (
+            // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+            <div
+              role="button"
+              tabIndex={0}
+              className={person.person}
+              key={`${person.person}`}
+              onClick={this.handleClick}
+            >
+              <Person
+                person={person.person}
+                linkImage={producerState.pictures[persons.indexOf(person.person)][0]}
+                linkButton="/person"
+                buttonName={<Trans>More</Trans>}
+                size="15"
+              />
+            </div>
+          ))}
+        </CardGroup>
+      </Fragment>
     );
   }
 }

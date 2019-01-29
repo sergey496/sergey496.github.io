@@ -1,6 +1,5 @@
-/* eslint-disable prefer-destructuring */
-/* eslint-disable react/destructuring-assignment */
-import React, { Fragment, Component } from 'react';
+/* eslint-disable */
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Figure } from 'react-bootstrap';
 
@@ -13,58 +12,61 @@ import Map from './map';
 import producerState from '../../utils/producerState';
 
 class Person extends Component {
-  constructor({ person }) {
-    super(person);
+  constructor(props) {
+    super(props);
 
-    this.state = {};
-    this.state.currentProducer = producerState.producers.find(
-      producer => producer.person === person,
-    );
-    this.state.currentProducerIndex = producerState.producers.findIndex(
-      producer => producer.person === person,
-    );
-
-    this.state.dataFilmorgaphy = this.state.currentProducer.filmography;
-    this.state.dataBiography = this.state.currentProducer.biography;
-    this.state.mapCoordinates = this.state.currentProducer.markOnMap;
-    this.state.photo = producerState.pictures[this.state.currentProducerIndex][0];
-    this.state.allPhotos = producerState.pictures[this.state.currentProducerIndex];
-    this.state.video = this.state.currentProducer.videoLinks;
+    this.state = {
+      person: this.props.person,
+      video: this.props.video,
+      dataFilmorgaphy: '',
+      dataBiography: '',
+      mapCoordinates: '',
+      photo: '',
+      allPhotos: '',
+    }
   }
 
-  // if (!localStorage.producerName) localStorage.setItem('producerName', '');
-  componentWillReceiveProps() {
-    this.props.person = localStorage.getItem('producerName');
+  componentWillMount() {
+    if (!window.localStorage.producerName) window.localStorage.setItem('producerName', 'Белоусов Олег Павлович');
+
+    const producerState = JSON.parse(window.localStorage.getItem('producerState'));
+    
+    const currentProducer = producerState.producers.find(
+      producer => producer.person === window.localStorage.getItem('producerName'),
+    );
+    const currentProducerIndex = producerState.producers.findIndex(
+      producer => producer.person === window.localStorage.getItem('producerName'),
+    );
+    
+    const dataFilmorgaphy = currentProducer.filmography;
+    const dataBiography = currentProducer.biography;
+    const mapCoordinates = currentProducer.markOnMap;
+    const photo = producerState.pictures[currentProducerIndex][0];
+    const allPhotos = producerState.pictures[currentProducerIndex];
+    const video = currentProducer.videoLinks;
+
+    this.setState({ dataFilmorgaphy, dataBiography, mapCoordinates, photo, allPhotos, video });
   }
 
   render() {
+    const { person, dataFilmorgaphy, dataBiography, mapCoordinates, photo, allPhotos, video } = this.state;
+
     return (
       <Fragment>
-        <h1>{this.person}</h1>
+        <h1>{person}</h1>
 
         <Figure>
-          <Figure.Image width={400} height={500} alt={this.person} src={this.state.photo} />
+          <Figure.Image width={400} height={500} alt={person} src={photo} />
         </Figure>
 
-        <Biography biography={this.state.dataBiography} />
-        <Filmography filmography={this.state.dataFilmorgaphy} />
-        <Photos photoLinks={this.state.allPhotos} person={this.person} />
-        <Video videoLink={this.state.video} />
-        <Map mapCoordinates={this.state.mapCoordinates} />
+        <Biography biography={dataBiography} />
+        <Filmography filmography={dataFilmorgaphy} />
+        <Photos photoLinks={allPhotos} person={person} />
+        <Video videoLink={video} />
+        <Map mapCoordinates={mapCoordinates} />
       </Fragment>
     );
   }
 }
-
-Person.defaultProps = {
-  person: 'Белоусов Олег Павлович',
-  video: 'https://www.youtube.com/embed/hFgB5E0uL_Y',
-};
-
-Person.propTypes = {
-  person: PropTypes.string,
-  // eslint-disable-next-line react/no-unused-prop-types
-  video: PropTypes.string,
-};
 
 export default Person;

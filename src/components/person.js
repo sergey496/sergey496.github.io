@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { Trans } from 'react-i18next';
+import { Link } from 'gatsby';
 
 const Person = ({
   nickname,
@@ -20,9 +21,9 @@ const Person = ({
     <Card.Body>
       {nickname !== '' && <Card.Title>{nickname}</Card.Title>}
       <Card.Text style={{ height: '50px' }}>{person}</Card.Text>
-      <Card.Link href={linkButton}>
+      <Link to={linkButton}>
         <Button variant="primary">{buttonName}</Button>
-      </Card.Link>
+      </Link>
     </Card.Body>
   </Card>
 );

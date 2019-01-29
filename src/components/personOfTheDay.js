@@ -19,7 +19,7 @@ export default class PersonOfTheDay extends Component {
 
   handleClick = (e) => {
     if (e.target.tagName === 'BUTTON') {
-      localStorage.setItem('producerName', `${e.currentTarget.className}`);
+      window.localStorage.setItem('producerName', `${e.currentTarget.className}`);
     }
   }
 

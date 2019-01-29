@@ -9,7 +9,9 @@ import team from '../../data/team.json';
 
 const Team = () => (
   <Layout>
-    <h1><Trans>OurTeamHeader</Trans></h1>
+    <h1>
+      <Trans>OurTeamHeader</Trans>
+    </h1>
 
     <CardGroup>
       {team.map(teammate => (
